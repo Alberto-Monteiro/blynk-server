@@ -1,7 +1,7 @@
 FROM openjdk:11-jre
-MAINTAINER Michael Ferguson <mpherg@gmail.com>
+MAINTAINER Alberto Monteiro <alberto.costa.monteiro@gmail.com>
 
-ENV BLYNK_SERVER_VERSION 0.41.13
+ENV BLYNK_SERVER_VERSION 0.41.15
 RUN mkdir /blynk
 RUN curl -L https://github.com/blynkkk/blynk-server/releases/download/v${BLYNK_SERVER_VERSION}/server-${BLYNK_SERVER_VERSION}.jar > /blynk/server.jar
 
@@ -10,6 +10,7 @@ RUN mkdir /data
 
 # Create configuration folder. To persist data, map a file to /config/server.properties
 RUN mkdir /config && touch /config/server.properties
+
 VOLUME ["/config", "/data/backup"]
 
 # IP port listing:
