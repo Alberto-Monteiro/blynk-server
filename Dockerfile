@@ -1,22 +1,97 @@
-FROM openjdk:11-jre
+FROM adoptopenjdk:11-jre-hotspot
 MAINTAINER Alberto Monteiro <alberto.costa.monteiro@gmail.com>
 
+## Server Port
 ENV BLYNK_SERVER_VERSION 0.41.15
+ENV HARDWARE_MQTT_PORT 8440
+ENV HTTP_PORT 8080
+ENV HTTPS_PORT 9443
+
+## Server
+ENV SERVER_PROPERTIES /config/server.properties
+ENV MAIL_PROPERTIES /config/mail.properties
+ENV WEB_REQUEST_MAX_SIZE 524288
+ENV USER_TAGS_LIMIT 100
+ENV NET_INTERFACE eth
+ENV FORCE_PORT_80_FOR_REDIRECT true
+ENV USER_DEVICES_LIMIT 50
+ENV NOTIFICATIONS_FREQUENCY_USER_QUOTA_LIMIT 5
+ENV USER_PROFILE_MAX_SIZE 256
+ENV PROFILE_SAVE_WORKER_PERIOD 60000
+ENV DATA_FOLDER /data
+ENV SERVER_SSL_CER ''
+ENV USER_MESSAGE_QUOTA_LIMIT 100
+ENV ENABLE_RAW_DB_DATA_STORE false
+ENV ENABLE_DB false
+ENV USER_WIDGET_MAX_SIZE_LIMIT 20
+ENV ALLOW_READING_WIDGET_WITHOUT_ACTIVE_APP false
+ENV STATS_PRINT_WORKER_PERIOD 60000
+ENV LOG_LEVEL info
+ENV RESTORE_HOST blynk-cloud.com
+ENV LCD_STRINGS_POOL_SIZE 6
+ENV HARDWARE_MQTT_PORT 8440
+ENV ADMIN_PAS ''
+ENV ALLOWED_ADMINISTRATOR_IPS 0.0.0.0/0,::/0
+ENV LISTEN_ADDRES ''
+ENV HTTP_PORT 8080
+ENV RESTORE false
+ENV SERVER_SSL_KE ''
+ENV ADMIN_ROOTPATH /admin
+ENV PRODUCT_NAME Blynk
+ENV CSV_EXPORT_DATA_POINTS_MAX 43200
+ENV ALLOW_STORE_IP true
+ENV FORCE_PORT_80_FOR_CSV false
+ENV HARD_SOCKET_IDLE_TIMEOUT 10
+ENV ASYNC_LOGGER_RING_BUFFER_SIZE 2048
+ENV HTTPS_PORT 9443
+ENV LOGS_FOLDER ./logs
+ENV WEBHOOKS_FREQUENCY_USER_QUOTA_LIMIT 1000
+ENV INITIAL_ENERGY 100000
+ENV BLOCKING_PROCESSOR_THREAD_POOL_LIMIT 6
+ENV TABLE_ROWS_POOL_SIZE 100
+ENV ADMIN_EMAIL admin@blynk.cc
+ENV MAP_STRINGS_POOL_SIZE 25
+ENV SERVER_SSL_KEY_PAS ''
+ENV USER_DASHBOARD_MAX_LIMIT 100
+ENV WEBHOOKS_RESPONSE_SIZE_LIMIT 96
+ENV TERMINAL_STRINGS_POOL_SIZE 25
+ENV NOTIFICATIONS_QUEUE_LIMIT 2000
+
+## Email
+ENV MAIL_SMTP_USERNAME example@gmail.com
+ENV MAIL_SMTP_PORT 587
+ENV MAIL_SMTP_PASSWORD ''
+ENV MAIL_SMTP_AUTH true
+ENV MAIL_SMTP_STARTTLS_ENABLE true
+ENV MAIL_SMTP_TIMEOUT 120000
+ENV MAIL_SMTP_HOST smtp.gmail.com
+ENV MAIL_SMTP_CONNECTIONTIMEOUT 30000
+
+# DB
+ENV JDBC_URL jdbc:postgresql://localhost:5432/blynk?tcpKeepAlive=true&socketTimeout=150
+ENV USER test
+ENV PASSWORD test
+ENV CONNECTION_TIMEOUT_MILLIS 30000
+ENV CLEAN_REPORTING true
+ENV REPORTING_JDBC_URL jdbc:postgresql://localhost:5432/blynk_reporting?tcpKeepAlive=true&socketTimeout=150
+ENV REPORTING_USER test
+ENV REPORTING_PASSWORD test
+ENV REPORTING_CONNECTION_TIMEOUT_MILLIS 30000
+
 RUN mkdir /blynk
 RUN curl -L https://github.com/blynkkk/blynk-server/releases/download/v${BLYNK_SERVER_VERSION}/server-${BLYNK_SERVER_VERSION}.jar > /blynk/server.jar
 
-# Create data folder. To persist data, map a volume to /data
 RUN mkdir /data
+RUN mkdir /config && touch /config/server.properties && touch /config/mail.properties && touch /config/db.properties
 
-# Create configuration folder. To persist data, map a file to /config/server.properties
-RUN mkdir /config && touch /config/server.properties
+RUN mkdir -p /usr/local/bin
+ADD ./bin /usr/local/bin
+RUN chmod +x /usr/local/bin/*.sh
+
+WORKDIR /data
 
 VOLUME ["/config", "/data/backup"]
 
-# IP port listing:
-# 8080: Hardware without ssl/tls support
-# 9443: Blynk app, https, web sockets, admin port
-EXPOSE 8080 9443
+EXPOSE ${HARDWARE_MQTT_PORT} ${HARDWARE_MQTT_PORT_SSL} ${HTTP_PORT} ${HTTPS_PORT}
 
-WORKDIR /data
-ENTRYPOINT ["java", "-jar", "/blynk/server.jar", "-dataFolder", "/data", "-serverConfig", "/config/server.properties"]
+ENTRYPOINT ["/usr/local/bin/run.sh"]
