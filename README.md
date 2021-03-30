@@ -31,7 +31,7 @@ docker run -v $(PWD)/server.properties:/config/server.properties rocksdf/blynk-s
 ```
 
 Example of use in docker-compose, you do not need to edit the .properties files
-```dockerfile
+```yaml
 version: '3.9'
 services:
   blynk:
