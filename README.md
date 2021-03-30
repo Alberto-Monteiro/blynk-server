@@ -30,4 +30,27 @@ To include your own server.properties file, mount it into /config/server.propert
 docker run -v $(PWD)/server.properties:/config/server.properties rocksdf/blynk-server:latest
 ```
 
+Example of use in docker-compose, you do not need to edit the .properties files
+```dockerfile
+version: '3.9'
+services:
+  blynk:
+    container_name: blynk
+    image: rocksdf/blynk-server:latest
+    environment:
+      - BLYNK_SERVER_VERSION=0.41.15
+      - ADMIN_EMAIL=admin@blynk.cc
+      - ADMIN_PAS=admin
+      - MAIL_SMTP_USERNAME=mail@gmail.com
+      - MAIL_SMTP_PASSWORD=pass
+    volumes:
+      - /DockerVolume/blynk/data:/data
+      - /DockerVolume/blynk/data/backup:/data/backup
+      - /DockerVolume/blynk/config:/config
+    restart: always
+    ports:
+      - 80:8080
+      - 443:9443
+```
+
 Or you can use a data volume in another container (check out different data volume techniques [here](https://docs.docker.com/engine/tutorials/dockervolumes/)).
