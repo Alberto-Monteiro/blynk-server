@@ -50,7 +50,7 @@ user.dashboard.max.limit=${USER_DASHBOARD_MAX_LIMIT}
 webhooks.response.size.limit=${WEBHOOKS_RESPONSE_SIZE_LIMIT}
 terminal.strings.pool.size=${TERMINAL_STRINGS_POOL_SIZE}
 notifications.queue.limit=${NOTIFICATIONS_QUEUE_LIMIT}
-" > /config/server.properties
+" >/config/server.properties
 
 echo "mail.smtp.username=${MAIL_SMTP_USERNAME}
 mail.smtp.port=${MAIL_SMTP_PORT}
@@ -60,7 +60,7 @@ mail.smtp.starttls.enable=${MAIL_SMTP_STARTTLS_ENABLE}
 mail.smtp.timeout=${MAIL_SMTP_TIMEOUT}
 mail.smtp.host=${MAIL_SMTP_HOST}
 mail.smtp.connectiontimeout=${MAIL_SMTP_CONNECTIONTIMEOUT}
-" > /config/mail.properties
+" >/config/mail.properties
 
 echo "jdbc.url=${JDBC_URL}
 user=${USER}
@@ -71,6 +71,12 @@ reporting.jdbc.url=${REPORTING_JDBC_URL}
 reporting.user=${REPORTING_USER}
 reporting.password=${REPORTING_PASSWORD}
 reporting.connection.timeout.millis=${REPORTING_CONNECTION_TIMEOUT_MILLIS}
-" > /config/db.properties
+" >/config/db.properties
 
-java -jar /blynk/server.jar -dataFolder /data -serverConfig /config/server.properties -mailConfig /config/mail.properties
+FILE=/blynk/server-${BLYNK_SERVER_VERSION}.jar
+
+if [ ! -f "$FILE" ]; then
+  curl -L https://github.com/blynkkk/blynk-server/releases/download/v"${BLYNK_SERVER_VERSION}"/server-"${BLYNK_SERVER_VERSION}".jar >"$FILE"
+fi
+
+java -jar "$FILE" -dataFolder /data -serverConfig /config/server.properties -mailConfig /config/mail.properties

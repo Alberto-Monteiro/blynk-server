@@ -79,7 +79,6 @@ ENV REPORTING_PASSWORD test
 ENV REPORTING_CONNECTION_TIMEOUT_MILLIS 30000
 
 RUN mkdir /blynk
-RUN curl -L https://github.com/blynkkk/blynk-server/releases/download/v${BLYNK_SERVER_VERSION}/server-${BLYNK_SERVER_VERSION}.jar > /blynk/server.jar
 
 RUN mkdir /data
 RUN mkdir /config && touch /config/server.properties && touch /config/mail.properties && touch /config/db.properties
