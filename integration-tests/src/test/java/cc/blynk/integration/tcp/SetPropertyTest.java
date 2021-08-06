@@ -67,7 +67,7 @@ public class SetPropertyTest extends SingleServerInstancePerTest {
     }
 
     @Test
-    //https://github.com/blynkkk/blynk-server/issues/756
+    //https://github.com/alberto-monteiro/blynk-server/issues/756
     public void testSetWidgetPropertyIsNotRestoredForTagWidgetAfterOverriding() throws Exception {
         Tag tag0 = new Tag(100_000, "Tag1", new int[] {0});
 

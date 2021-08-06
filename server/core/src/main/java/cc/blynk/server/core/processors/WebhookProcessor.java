@@ -96,7 +96,7 @@ public class WebhookProcessor extends NotificationBase {
             builder = httpclient.prepare(webHook.method.name(), newUrl);
         } catch (NumberFormatException nfe) {
             //this is known possible error due to malformed input
-            //https://github.com/blynkkk/blynk-server/issues/1001
+            //https://github.com/alberto-monteiro/blynk-server/issues/1001
             log.debug("Error during webhook initialization.", nfe);
             return;
         } catch (IllegalArgumentException iae) {

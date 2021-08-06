@@ -120,7 +120,7 @@ public abstract class BaseReportTask implements Runnable {
         int fetchCount = (int) report.reportType.getFetchCount(report.granularityType);
         long startFrom = now - TimeUnit.DAYS.toMillis(report.reportType.getDuration());
         //truncate second, minute, hour, depending of granularity in order to do not filter first point.
-        //https://github.com/blynkkk/blynk-server/issues/1149
+        //https://github.com/alberto-monteiro/blynk-server/issues/1149
         startFrom = (startFrom / report.granularityType.period) * report.granularityType.period;
         Path output = Paths.get(userCsvFolder.toString() + ".zip");
 

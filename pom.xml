@@ -14,7 +14,7 @@
     </organization>
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/blynkkk/blynk-server/issues</url>
+        <url>https://github.com/alberto-monteiro/blynk-server/issues</url>
     </issueManagement>
 
     <groupId>cc.blynk</groupId>
@@ -23,9 +23,9 @@
     <packaging>pom</packaging>
 
     <scm>
-        <url>https://github.com/blynkkk/blynk-server.git</url>
-        <connection>scm:git:ssh://git@github.com/blynkkk/blynk-server.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/blynkkk/blynk-server.git</developerConnection>
+        <url>https://github.com/alberto-monteiro/blynk-server.git</url>
+        <connection>scm:git:ssh://git@github.com/alberto-monteiro/blynk-server.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/alberto-monteiro/blynk-server.git</developerConnection>
         <tag>v0.41.2-SNAPSHOT</tag>
     </scm>
 

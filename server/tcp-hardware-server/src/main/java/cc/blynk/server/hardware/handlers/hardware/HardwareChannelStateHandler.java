@@ -72,7 +72,7 @@ public class HardwareChannelStateHandler extends ChannelInboundHandlerAdapter {
         //this is special case.
         //in case hardware quickly reconnects we do not mark it as disconnected
         //as it is already online after quick disconnect.
-        //https://github.com/blynkkk/blynk-server/issues/403
+        //https://github.com/alberto-monteiro/blynk-server/issues/403
         boolean isHardwareConnected = session.isHardwareConnected(dashBoard.id, device.id);
         if (!isHardwareConnected) {
             log.trace("Changing device status. DeviceId {}, dashId {}", device.id, dashBoard.id);
@@ -106,7 +106,7 @@ public class HardwareChannelStateHandler extends ChannelInboundHandlerAdapter {
             );
         } else {
             //delayed notification
-            //https://github.com/blynkkk/blynk-server/issues/493
+            //https://github.com/alberto-monteiro/blynk-server/issues/493
             ctx.executor().schedule(new DelayedPush(session, device, notification, message, dash),
                                     notification.notifyWhenOfflineIgnorePeriod, TimeUnit.MILLISECONDS);
         }

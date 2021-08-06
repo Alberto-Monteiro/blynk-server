@@ -772,7 +772,7 @@ public class AppSyncWorkflowTest extends SingleServerInstancePerTest {
     }
 
     @Test
-    //https://github.com/blynkkk/blynk-server/issues/443
+    //https://github.com/alberto-monteiro/blynk-server/issues/443
     public void testSyncWidgetValueOverlapsWithPinStorage() throws Exception {
         clientPair.hardwareClient.send("hardware vw 125 1");
         clientPair.appClient.verifyResult(hardware(1, "1-0 vw 125 1"));

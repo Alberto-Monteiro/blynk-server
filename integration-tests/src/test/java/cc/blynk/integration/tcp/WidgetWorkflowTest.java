@@ -163,7 +163,7 @@ public class WidgetWorkflowTest extends SingleServerInstancePerTest {
     }
 
     @Test
-    // https://github.com/blynkkk/blynk-server/issues/1266
+    // https://github.com/alberto-monteiro/blynk-server/issues/1266
     public void testWidgetValueNotChangedAfterUpdate() throws Exception {
         clientPair.appClient.createWidget(1, "{\"id\":82561, \"width\":1, \"height\":1,\"type\":\"BUTTON\", \"value\":\"1\"}");
         clientPair.appClient.send("loadProfileGzipped");
