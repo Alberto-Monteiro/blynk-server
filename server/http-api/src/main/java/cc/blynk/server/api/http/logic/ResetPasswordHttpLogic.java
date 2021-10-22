@@ -117,6 +117,8 @@ public class ResetPasswordHttpLogic extends BaseHttpHandler {
 
         ResetPassToken userToken = new ResetPassToken(trimmedEmail, appName);
         tokensPool.addToken(token, userToken);
+
+        log.info(String.format("Reset password[%s] - link: [ %s ]", email, resetPassUrl + token));
         String message = emailBody.replace(Placeholders.RESET_URL, resetPassUrl + token);
         log.info("Sending token to {} address", trimmedEmail);
 

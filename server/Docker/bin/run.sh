@@ -8,6 +8,7 @@ https.port=${HTTPS_PORT}
 server.ssl.cert=${SERVER_SSL_CERT}
 server.ssl.key=${SERVER_SSL_KEY}
 server.ssl.key.pass=${SERVER_SSL_KEY_PASS}
+server.host=${SERVER_HOST}
 server.properties=${SERVER_PROPERTIES}
 mail.properties=${MAIL_PROPERTIES}
 web.request.max.size=${WEB_REQUEST_MAX_SIZE}
