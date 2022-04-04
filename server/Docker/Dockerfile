@@ -2,7 +2,7 @@ FROM adoptopenjdk:11-jre-hotspot
 MAINTAINER Alberto Monteiro <alberto.costa.monteiro@gmail.com>
 
 ## Server Port
-ENV BLYNK_SERVER_VERSION 0.41.16
+ENV BLYNK_SERVER_VERSION 0.41.17-SNAPSHOT
 ENV HARDWARE_MQTT_PORT 8440
 ENV HTTP_PORT 8080
 ENV HTTPS_PORT 9443
