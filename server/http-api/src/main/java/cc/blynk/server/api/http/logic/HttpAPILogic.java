@@ -54,6 +54,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.AbstractMap;
+import java.util.Map;
 
 import static cc.blynk.core.http.Response.badRequest;
 import static cc.blynk.core.http.Response.ok;
@@ -407,6 +408,16 @@ public class HttpAPILogic extends TokenBaseHttpHandler {
                                            @PathParam("pin") String pinString,
                                            String[] pinValues) {
         return updateWidgetPinData(token, pinString, pinValues);
+    }
+
+    @PUT
+    @Path("update2/{pin}")
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    @Metric(HTTP_UPDATE_PIN_DATA)
+    public Response updateWidgetPinDataNew2(@PathParam("pin") String pinString,
+                                            Map<String, String> body) {
+
+        return updateWidgetPinData(body.get("token"), pinString, new String[]{body.get("value")});
     }
 
     //todo remove later?

@@ -13,6 +13,11 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpResponse;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
 /**
  * The Blynk Project.
  * Created by Dmitriy Dumanskiy.
@@ -29,6 +34,13 @@ public abstract class TokenBaseHttpHandler extends BaseHttpHandler {
     public void finishHttp(ChannelHandlerContext ctx, URIDecoder uriDecoder,
                            HandlerWrapper handler, Object[] params) {
         String tokenPathParam = uriDecoder.pathData.get("token");
+
+        if (Objects.isNull(tokenPathParam)) {
+            Optional<Map<String, String>> bodyMap = Arrays.stream(params)
+                    .filter(Map.class::isInstance).map(o -> (Map<String, String>) o).findFirst();
+            tokenPathParam = bodyMap.orElseGet(null).get("token");
+        }
+
         if (tokenPathParam == null) {
             ctx.writeAndFlush(Response.badRequest("No token provided."));
             return;
