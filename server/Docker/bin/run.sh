@@ -2,6 +2,10 @@
 
 set -e
 
+CONFIG_DIR="/data/config"
+
+mkdir -p "$CONFIG_DIR"
+
 echo "hardware.mqtt.port=${HARDWARE_MQTT_PORT}
 http.port=${HTTP_PORT}
 https.port=${HTTPS_PORT}
@@ -52,7 +56,7 @@ user.dashboard.max.limit=${USER_DASHBOARD_MAX_LIMIT}
 webhooks.response.size.limit=${WEBHOOKS_RESPONSE_SIZE_LIMIT}
 terminal.strings.pool.size=${TERMINAL_STRINGS_POOL_SIZE}
 notifications.queue.limit=${NOTIFICATIONS_QUEUE_LIMIT}
-" >/config/server.properties
+" >$CONFIG_DIR/server.properties
 
 echo "mail.smtp.auth=${MAIL_SMTP_AUTH}
 mail.smtp.starttls.enable=${MAIL_SMTP_STARTTLS}
@@ -62,7 +66,7 @@ mail.smtp.username=${MAIL_SMTP_USERNAME}
 mail.smtp.password=${MAIL_SMTP_PASSWORD}
 mail.smtp.connectiontimeout=${MAIL_SMTP_CONNECTIONTIMEOUT}
 mail.smtp.timeout=${MAIL_SMTP_TIMEOUT}
-" >/config/mail.properties
+" >$CONFIG_DIR/mail.properties
 
 echo "jdbc.url=${JDBC_URL}
 user=${USER}
@@ -73,12 +77,12 @@ reporting.jdbc.url=${REPORTING_JDBC_URL}
 reporting.user=${REPORTING_USER}
 reporting.password=${REPORTING_PASSWORD}
 reporting.connection.timeout.millis=${REPORTING_CONNECTION_TIMEOUT_MILLIS}
-" >/config/db.properties
+" >$CONFIG_DIR/db.properties
 
-FILE=/blynk/server-${BLYNK_SERVER_VERSION}.jar
+FILE=/app/server-${BLYNK_SERVER_VERSION}.jar
 
 if [ ! -f "$FILE" ]; then
   curl -L https://github.com/Alberto-Monteiro/blynk-server/releases/download/v"${BLYNK_SERVER_VERSION}"/server-"${BLYNK_SERVER_VERSION}".jar >"$FILE"
 fi
 
-exec java -jar "$FILE" -dataFolder /data -serverConfig /config/server.properties -mailConfig /config/mail.properties
+exec java -jar "$FILE" -dataFolder /data -serverConfig $CONFIG_DIR/server.properties -mailConfig $CONFIG_DIR/mail.properties
