@@ -4,6 +4,8 @@ set -e
 
 CONFIG_DIR="/data/config"
 
+chmod -R 755 /data
+
 mkdir -p "$CONFIG_DIR"
 
 echo "hardware.mqtt.port=${HARDWARE_MQTT_PORT}
