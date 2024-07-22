@@ -88,6 +88,7 @@ ENV REPORTING_CONNECTION_TIMEOUT_MILLIS 30000
 RUN mkdir /app /data
 COPY ./bin /app
 RUN chmod +x /app/*.sh
+RUN chmod -R 755 /data
 
 WORKDIR /data
 

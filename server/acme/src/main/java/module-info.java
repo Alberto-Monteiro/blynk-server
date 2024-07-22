@@ -5,7 +5,6 @@
  */
 module cc.blynk.server.acme {
     requires org.apache.logging.log4j;
-    requires org.shredzone.acme4j.utils;
     requires org.shredzone.acme4j;
 
     exports cc.blynk.server.acme;
